@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>API1</title>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function(){
+                namespace = '/demo_streaming'; 
+                var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+                socket.on('stream_channel', function(tweetData){
+                    var tweetInfo=JSON.stringify(tweetData,null,4)
+                    console.log(tweetInfo);
+                    $("#log").append("<br><br>+++++++++++++++++++++ANOTHER TWEET++++++++++++++++++++++++<br><br>")
+                    $("#log").append(tweetInfo)
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>TWITTER STREAMING DATA</h1>
+        <div>
+            <p>Enter comma separated keywords: </p>
+            <form method="GET" action='/api1'>
+                <input type="text" name="keyword">
+                <input type="submit" value="submit">
+            </form>
+        </div>
+        
+        <div id="log"></div>
+    </body>
+</html>
